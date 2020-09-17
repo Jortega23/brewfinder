@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.main-page {
+  display: grid;
+  grid-template-columns: 45% 55%;
+}
