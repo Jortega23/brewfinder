@@ -1,16 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import Search from './components/Search'
+import Breweries from './components/Breweries'
 import axios from 'axios'
 import './App.css';
 
 const App = () => {
   const [breweries, setBreweries] = useState([])
+  const [query, setQuery] = useState('')
 
-  useEffect(async() => {
-    const res = await axios.get('https://api.openbrewerydb.org/breweries/1')
-    setBreweries(res.data)
-    console.log(breweries)
-  },[])
+  useEffect(() => {
+    const getBreweries = async () => {
+      const res = await axios.get(`https://api.openbrewerydb.org/breweries?by_city=${query}`)
+      setBreweries(res.data)
+    }
+
+    getBreweries()
+  },[query])
 
   return (
 
@@ -20,7 +25,8 @@ const App = () => {
         <br/>
       <h3>Find a brew near you.</h3>
         <br/>
-      <Search />
+      <Search getQuery={(q) => setQuery(q)}/>
+      <Breweries breweries={breweries}/>
     </div>
   );
 }

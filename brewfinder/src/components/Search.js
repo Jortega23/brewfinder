@@ -1,12 +1,19 @@
+import { sanitizeQuery } from 'express-validator';
 import React, {useState} from 'react'
 
-const Search = () => {
-  const [useText, setText] = useState('')
+const Search = ({ getQuery }) => {
+  const [text, setText] = useState('')
+
+  const onChange = (q) => {
+    setText(q)
+    getQuery(q)
+  }
+  
+
   return (
     <div className='search-bar'>
       <form>
-        <input type="text"/>
-        <input type="submit"/>
+        <input type="text" onChange={(e) => onChange(e.target.value)} value={text}/>
       </form>
     </div>
   )
